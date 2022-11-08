@@ -10,7 +10,7 @@ export const Navbar = ({ data }: { data: ApiResponse<{ boards: Board[]; posts: P
 
       {data.payload.boards.map((board) => (
         <li key={board.id}>
-          <Link href={`/board/${board.tag}`}>{board.name}</Link>
+          <Link href={`/${board.tag}`}>{board.name}</Link>
         </li>
       ))}
     </ul>

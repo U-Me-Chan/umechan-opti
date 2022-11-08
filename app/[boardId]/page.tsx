@@ -21,9 +21,7 @@ export default async function Page({
 
       {data.payload.posts?.map((post) => (
         <div key={post.id}>
-          <Link
-            href={`/board/${boardId}/thread/${post.id}`}
-          >{`thread ${post.id} - ${post.subject}`}</Link>
+          <Link href={`/${boardId}/${post.id}`}>{`thread ${post.id} - ${post.subject}`}</Link>
         </div>
       ))}
     </>
