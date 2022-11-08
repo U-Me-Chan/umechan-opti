@@ -1,3 +1,9 @@
+export type ApiResponse<T> = {
+  payload: T;
+  version: string;
+  error: null;
+};
+
 export type Board = {
   id: number;
   tag: string;
@@ -5,12 +11,12 @@ export type Board = {
   threads_count: number;
 };
 
-export interface BoardData {
+export type BoardData = {
   count?: number;
   posts?: Post[];
-}
+};
 
-export interface Post {
+export type Post = {
   id?: number;
   poster?: string;
   subject?: string;
@@ -27,28 +33,28 @@ export interface Post {
   media?: Media;
   truncated_message?: string;
   datetime?: Date;
-}
+};
 
-export interface Media {
+export type Media = {
   images?: Image[];
   youtubes?: YouTube[];
-}
+};
 
-export interface Image {
+export type Image = {
   link?: string;
   preview?: string;
-}
+};
 
-export interface YouTube {
+export type YouTube = {
   link?: string;
   preview?: string;
-}
+};
 
-export interface ThreadData extends Post {
+export type ThreadData = Post & {
   replies: Post[];
-}
+};
 
-export interface RadioStatus {
+export type RadioStatus = {
   scheduling?: boolean;
   playing?: boolean;
   syncing?: boolean;
@@ -58,9 +64,9 @@ export interface RadioStatus {
   fileData?: FileData;
   playlistData?: PlaylistData;
   currentPlaylistId?: string;
-}
+};
 
-export interface FileData {
+export type FileData = {
   filehash?: string;
   path?: string;
   name?: string;
@@ -70,10 +76,10 @@ export interface FileData {
   duration?: number;
   trimStart?: number;
   trimEnd?: number;
-}
+};
 
-export interface PlaylistData {
+export type PlaylistData = {
   id?: number;
   name?: string;
   type?: string;
-}
+};

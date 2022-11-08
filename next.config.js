@@ -1,23 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   swcMinify: true,
-  compiler: {
-    styledComponents: true,
+  experimental: {
+    // Required:
+    appDir: true,
   },
-  i18n: {
-    locales: ['ru'],
-    defaultLocale: 'ru',
-  },
-  devIndicators: {
-    buildActivityPosition: 'bottom-right',
-  },
-  output: 'standalone',
-  rewrites: async () => ({
-    beforeFiles: [
-      { source: '/back-api/:path*', destination: 'http://pissykaka.scheoble.xyz/:path*' },
-    ],
-  }),
 };
 
 module.exports = nextConfig;
