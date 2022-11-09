@@ -6,6 +6,9 @@ const nextConfig = {
     // Required:
     appDir: true,
   },
+  images: {
+    domains: ['chan.kugi.club'],
+  },
 };
 
 module.exports = nextConfig;

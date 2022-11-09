@@ -1,4 +1,5 @@
 import { getThread } from 'src/service/api';
+import { PostContent } from 'src/ui/PostContent';
 
 export default async function Page({
   params: { boardTag, threadId },
@@ -16,7 +17,7 @@ export default async function Page({
 
       <div>
         {data.payload.thread_data.replies.map((post) => (
-          <div key={post.id}>{post.message}</div>
+          <PostContent key={post.id} message={post.truncated_message || ''} />
         ))}
       </div>
     </>
