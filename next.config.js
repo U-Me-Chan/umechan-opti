@@ -7,7 +7,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['chan.kugi.club'],
+    domains: ['chan.kugi.club', 'filestore.scheoble.xyz'],
   },
 };
 

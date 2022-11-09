@@ -16,9 +16,18 @@ export const RadioPlayer = ({
   mount: { name: string; link: string; apiBasePath: string };
   initialState: RadioStatus;
 }) => {
-  const { name, link, apiBasePath } = mount;
+  const { link, apiBasePath } = mount;
   const [isPlaying, setIsPlaying] = useState(false);
+  const [updateIntervalMs, setUpdateIntervalMs] = useState(60000);
   const [radioStatus, setRadioStatus] = useState<RadioStatus>(initialState);
+
+  useEffect(() => {
+    if (isServer()) {
+      return;
+    }
+
+    setUpdateIntervalMs(() => (isPlaying ? 10000 : 60000));
+  }, [isPlaying]);
 
   useEffect(() => {
     if (isServer()) {
@@ -33,16 +42,14 @@ export const RadioPlayer = ({
       getRadioStatus(apiBasePath)
         .then((res) => setRadioStatus(res))
         .catch(console.error);
-    }, 20000);
+    }, updateIntervalMs);
 
     return () => clearInterval(intervalPointer);
-  }, []);
+  }, [updateIntervalMs]);
 
   const content = radioStatus?.streaming ? (
     <>
       <Box flexDirection='column' alignItems='center' width='100%' gap='4px'>
-        <Text variant={TextVariant.textBodyBold1}>{`${name} `}</Text>
-
         <Text
           variant={TextVariant.textBody1}
           style={{
@@ -106,6 +113,7 @@ export const RadioPlayer = ({
           name='volume'
           min='0'
           max='100'
+          value='100'
           onChange={(ev) => {
             try {
               const value = ev.target.valueAsNumber;
@@ -127,7 +135,6 @@ export const RadioPlayer = ({
       flexDirection='column'
       alignItems='center'
       justifyContent='flex-start'
-      padding='8px'
       gap='8px'
       width='100%'
     >

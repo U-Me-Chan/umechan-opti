@@ -36,16 +36,11 @@ export type Post = {
 };
 
 export type Media = {
-  images?: Image[];
-  youtubes?: YouTube[];
+  images?: MediaItem[];
+  youtubes?: MediaItem[];
 };
 
-export type Image = {
-  link?: string;
-  preview?: string;
-};
-
-export type YouTube = {
+export type MediaItem = {
   link?: string;
   preview?: string;
 };

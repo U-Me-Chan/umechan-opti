@@ -15,3 +15,9 @@ export const RADIOS_LINKS: Array<{ name: string; link: string; apiBasePath: stri
     apiBasePath: 'http://chan.kugi.club:10000/',
   },
 ];
+
+export const EXTERNAL_LINKS = [
+  { text: 'Pissychan', href: 'http://pissychan.oxore.net/' },
+  { text: 'Discord', href: 'https://discord.gg/DhhjsVgXBG' },
+  { text: 'Исходники', href: 'https://github.com/U-Me-Chan' },
+];
