@@ -29,3 +29,11 @@ export const getThread = (threadId: string) => {
     `http://pissykaka.scheoble.xyz/post/${threadId || '0'}`,
   );
 };
+
+export const getBoardData = (boardTag: string, page: number) => {
+  const url = new URL(`http://pissykaka.scheoble.xyz/v2/board/${boardTag}`);
+  url.searchParams.append('offset', (page * 20).toString());
+  url.searchParams.append('limit', (20).toString());
+
+  return api<ApiResponse<BoardData>>(url.toString());
+};
