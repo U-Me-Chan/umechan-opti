@@ -23,3 +23,9 @@ export const getAllBoards = () => {
     'http://pissykaka.scheoble.xyz/v2/board',
   );
 };
+
+export const getThread = (threadId: string) => {
+  return api<ApiResponse<{ thread_data: ThreadData }>>(
+    `http://pissykaka.scheoble.xyz/post/${threadId || '0'}`,
+  );
+};

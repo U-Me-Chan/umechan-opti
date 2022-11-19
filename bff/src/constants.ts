@@ -15,3 +15,18 @@ export const RADIOS_LINKS: Array<{ name: string; link: string; apiBasePath: stri
     apiBasePath: 'http://chan.kugi.club:10000/',
   },
 ];
+export const FEED_THREAD = {
+  threadId: '28549',
+  whitelist: [
+    '28550',
+    '28551',
+    '28555',
+    '28603',
+    '28883',
+    '29109',
+    '29355',
+    '29438',
+    '30281',
+    '30621',
+  ],
+};
