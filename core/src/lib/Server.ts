@@ -61,10 +61,11 @@ export class Server {
     });
   }
 
-  addPage(page: Page) {
+  addPage(pageCls: Newable<Page>) {
+    const page = new pageCls();
     this.pages.push(page);
-    this.fastify.get(`/page/${page.name}`, async () => {
-      return await page.getLayout();
+    this.fastify.get(`/page/${page.name}`, async (req) => {
+      return await page.getLayout(req);
     });
 
     const converter = new SchemaToSwagger(this.swagger);

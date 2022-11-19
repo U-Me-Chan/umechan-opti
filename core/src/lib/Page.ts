@@ -1,5 +1,6 @@
 import { Newable } from './Newable';
 import { Layout } from './Layout';
+import { FastifyRequest } from 'fastify';
 
 export class Page {
   name: string;
@@ -10,9 +11,9 @@ export class Page {
     this.layout = layout;
   }
 
-  async getLayout() {
+  async getLayout(req: FastifyRequest) {
     const instance = new this.layout();
-    await instance.resolve();
+    await instance.resolve(req);
     return instance.resolved;
   }
 }

@@ -1,3 +1,4 @@
+import { FastifyRequest } from 'fastify';
 import { Newable } from './Newable';
 import { Component } from "./Component";
 
@@ -21,18 +22,18 @@ export class Layout implements LayoutInterface {
     item: Component<unknown>['state'] | Layout['resolved'];
   }[] = [];
 
-  async resolve() {
+  async resolve(req: FastifyRequest) {
     for (let contentItem of this.content) {
       const { type, item } = contentItem;
       const instance = new item();
 
       if (instance instanceof Layout) {
-        await instance.resolve();
+        await instance.resolve(req);
         this.resolved.push({ type, name: instance.name, direction: instance.direction, item: instance.resolved });
       } else {
         if (instance.stateLoader) {
           try {
-            await instance.stateLoader();
+            await instance.stateLoader(req);
           } catch (e) {
             console.log((e as Error).message);
           }

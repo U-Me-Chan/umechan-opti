@@ -1,8 +1,9 @@
+import { FastifyRequest } from 'fastify';
 import { TypeSchema } from "./TypeSchema";
 
 export interface Component<T> {
   name: string;
   state: T;
-  stateLoader?: () => Promise<void>;
+  stateLoader?: (req: FastifyRequest) => Promise<void>;
   stateTypeSchema?: TypeSchema;
 }
