@@ -17,3 +17,9 @@ function api<T = unknown>(url: string, init?: RequestInit): Promise<T> {
 export const getRadioStatus = (url: string) => {
   return api<RadioStatus>(`${url}api/status/`);
 };
+
+export const getAllBoards = () => {
+  return api<ApiResponse<{ boards: Board[]; posts: Post[] }>>(
+    'http://pissykaka.scheoble.xyz/v2/board',
+  );
+};
