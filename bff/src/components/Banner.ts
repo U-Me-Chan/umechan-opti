@@ -1,4 +1,5 @@
 import { TypeSchema, Component } from 'core';
+import { bannerState } from '../schemes/banner';
 
 class Banner implements Component<{ bannersUrls: string[], current: number }> {
   name = 'Banner';
@@ -31,18 +32,7 @@ class Banner implements Component<{ bannersUrls: string[], current: number }> {
     current: 0,
   };
   stateLoader = async () => {};
-  stateTypeSchema: TypeSchema = {
-    type: 'object',
-    properties: {
-      bannersUrls: {
-        type: 'array',
-        of: { type: 'string' },
-      },
-      current: {
-        type: 'number'
-      }
-    },
-  };
+  stateTypeSchema: TypeSchema = bannerState;
 }
 
 export default Banner;

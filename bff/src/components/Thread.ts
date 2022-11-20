@@ -1,13 +1,14 @@
 import { TypeSchema, Component } from 'core';
 import { getThread } from '../api/service';
 import { Post } from '../api/types';
+import { threadState } from '../schemes/thread';
 
-class Thread implements Component<{ posts: Post[] }> {
+type T = Component<{ posts: Post[] }>;
+
+class Thread implements T {
   name = 'Thread';
-  state: { posts: Post[] } = {
-    posts: []
-  };
-  stateLoader: Component<{ posts: Post[] }>['stateLoader'] = async (request) => {
+  state: T['state'] = { posts: [] };
+  stateLoader: T['stateLoader'] = async (request) => {
     const { query } = request;
     const { threadId = '0' } = query as { threadId: string };
     const { payload: { thread_data: { replies } } } = await getThread(threadId);
@@ -15,55 +16,7 @@ class Thread implements Component<{ posts: Post[] }> {
       posts: replies,
     };
   };
-  stateTypeSchema: TypeSchema = {
-    type: 'object',
-    properties: {
-      posts: {
-        type: 'array',
-        of: {
-          type: 'object',
-          properties: {
-            id: { type: 'number' },
-            poster: { type: 'string' },
-            subject: { type: 'string' },
-            message: { type: 'string' },
-            truncated_message: { type: 'string' },
-            timestamp: { type: 'number' },
-            board_id: { type: 'number' },
-            parent_id: { type: 'number' },
-            updated_at: { type: 'number' },
-            estimate: { type: 'number' },
-            is_verify: { type: 'boolean' },
-            media: {
-              type: 'object',
-              properties: {
-                images: {
-                  type: 'array',
-                  of: {
-                    type: 'object',
-                    properties: {
-                      link: { type: 'string' },
-                      preview: { type: 'string' },
-                    },
-                  },
-                },
-                youtubes: {
-                  type: 'array',
-                  of: {
-                    type: 'object',
-                    properties: {
-                      link: { type: 'string' },
-                      preview: { type: 'string' },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  };
+  stateTypeSchema: TypeSchema = threadState;
 }
 
 export default Thread;

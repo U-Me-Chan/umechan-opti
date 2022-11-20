@@ -1,9 +1,9 @@
-import PageLayout from '../layouts/Page';
+import PageMainLayout from '../layouts/PageMainLayout';
 import { Page } from 'core';
 
 class PageMain extends Page {
   constructor() {
-    super('pageMain', PageLayout);
+    super('pageMain', PageMainLayout);
   }
 }
 

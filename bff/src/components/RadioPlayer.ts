@@ -2,12 +2,24 @@ import { RadioStatus } from './../api/types';
 import { RADIOS_LINKS } from './../constants';
 import { getRadioStatus } from './../api/service';
 import { TypeSchema, Component } from 'core';
+import { radioPlayerState } from '../schemes/radioPlayer';
 
-class RadioPlayer implements Component<{ status: { mount: { name: string; link: string; apiBasePath: string }, status: RadioStatus }[] }> {
+type Status = {
+  mount: {
+    name: string;
+    link: string;
+    apiBasePath: string;
+  };
+  status: RadioStatus;
+};
+
+type T = Component<{ status: Status[]; }>;
+
+class RadioPlayer implements T {
   name = 'RadioPlayer';
-  state: { status: { mount: { name: string; link: string; apiBasePath: string }, status: RadioStatus }[] } = { status: [] };
+  state: T['state'] = { status: [] };
   stateLoader = async () => {
-    const status: { mount: { name: string; link: string; apiBasePath: string }, status: RadioStatus }[] = [];
+    const status: Status[] = [];
 
     try {
       await Promise.all(
@@ -21,56 +33,7 @@ class RadioPlayer implements Component<{ status: { mount: { name: string; link: 
 
     this.state = { status };
   };
-  stateTypeSchema: TypeSchema = {
-    type: 'object',
-    properties: {
-      status: {
-        type: 'array',
-        of: {
-          type: 'object',
-          properties: {
-            mount: {
-              type: 'object',
-              properties: {
-                name: { type: 'string' },
-                link: { type: 'string' },
-                apiBasePath: { type: 'string' },
-              },
-            },
-            status: {
-              type: 'object',
-              properties: {
-                scheduling: { type: 'boolean' },
-                playing: { type: 'boolean' },
-                syncing: { type: 'boolean' },
-                streaming: { type: 'boolean' },
-                currentFile: { type: 'string' },
-                thumbnailPath: { type: 'string' },
-                fileData: {
-                  type: 'object',
-                  properties: {
-                    filehash: { type: 'string' },
-                    path: { type: 'string' },
-                    name: { type: 'string' },
-                    id3Artist: { type: 'string' },
-                    id3Title: { type: 'string' },
-                  },
-                },
-                playlistData: {
-                  type: 'object',
-                  properties: {
-                    id: { type: 'number' },
-                    name: { type: 'string' },
-                    type: { type: 'string' },
-                  }
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  };
+  stateTypeSchema: TypeSchema = radioPlayerState;
 }
 
 export default RadioPlayer;

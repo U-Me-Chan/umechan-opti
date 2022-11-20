@@ -1,14 +1,17 @@
 import { TypeSchema, Component } from 'core';
 import { getAllBoards } from '../api/service';
+import { navbarState } from '../schemes/navbar';
 
 type Link = {
   title: string;
   href: string;
 };
 
-class Navbar implements Component<{ links: Link[] }> {
+type T = Component<{ links: Link[] }>;
+
+class Navbar implements T {
   name = 'Navbar';
-  state: { links: Link[] } = { links: [] };
+  state: T['state'] = { links: [] };
   stateLoader = async () => {
     const { payload: { boards } } = await getAllBoards();
     this.state = {
@@ -18,21 +21,7 @@ class Navbar implements Component<{ links: Link[] }> {
       ],
     };
   };
-  stateTypeSchema: TypeSchema = {
-    type: 'object',
-    properties: {
-      links: {
-        type: 'array',
-        of: {
-          type: 'object',
-          properties: {
-            title: { type: 'string' },
-            href: { type: 'string' },
-          },
-        },
-      },
-    },
-  };
+  stateTypeSchema: TypeSchema = navbarState;
 }
 
 export default Navbar;

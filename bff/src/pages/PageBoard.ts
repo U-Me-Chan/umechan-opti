@@ -1,4 +1,4 @@
-import PageBoardLayout from '../layouts/PageBoard';
+import PageBoardLayout from '../layouts/PageBoardLayout';
 import { Page } from 'core';
 
 class PageBoard extends Page {

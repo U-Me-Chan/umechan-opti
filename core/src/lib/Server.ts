@@ -31,34 +31,8 @@ export class Server {
         .send(docsHtml);
     });
 
-    // TODO: move into schemaConverter
-    this.swagger.definition('LayoutRef', {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          type: {
-            type: 'string'
-          },
-          name: {
-            type: 'string',
-          },
-          direction: {
-            type: 'string'
-          },
-          item: {
-            anyOf: [
-              {
-                type: 'array',
-                items: {
-                  '$ref': '#/components/schemas/LayoutRef'
-                },
-              }
-            ],
-          }
-        }
-      }
-    });
+    const converter = new SchemaToSwagger(this.swagger);
+    converter.writeLayoutRef();
   }
 
   addPage(pageCls: Newable<Page>) {

@@ -59,7 +59,7 @@ export class SchemaToSwagger {
       convertTypeSchemaToSwaggerDefinition(stateTypeSchema || { type: 'string' }),
     );
 
-    // TODO: fix typings
+    // TODO fix typings
     // @ts-ignore
     this.swagger._definitions['LayoutRef'].items.properties.item.anyOf.push({
       '$ref': `#/components/schemas/Component${name}State`
@@ -86,6 +86,36 @@ export class SchemaToSwagger {
           },
         },
       },
+    });
+  }
+
+  writeLayoutRef() {
+    this.swagger.definition('LayoutRef', {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          type: {
+            type: 'string'
+          },
+          name: {
+            type: 'string',
+          },
+          direction: {
+            type: 'string'
+          },
+          item: {
+            anyOf: [
+              {
+                type: 'array',
+                items: {
+                  '$ref': '#/components/schemas/LayoutRef'
+                },
+              }
+            ],
+          }
+        }
+      }
     });
   }
 }

@@ -3,8 +3,8 @@ import Feed from '../components/Feed';
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 
-class PageLayout extends Layout implements LayoutInterface {
-  name = 'Page';
+class PageMainLayout extends Layout implements LayoutInterface {
+  name = 'PageMainLayout';
   direction: "row" | "column" = 'row';
   content: LayoutInterface['content'] = [
     { type: 'layout', item: LeftSidebar },
@@ -13,4 +13,4 @@ class PageLayout extends Layout implements LayoutInterface {
   ];
 }
 
-export default PageLayout;
+export default PageMainLayout;
