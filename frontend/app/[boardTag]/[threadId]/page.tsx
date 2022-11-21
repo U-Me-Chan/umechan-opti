@@ -9,9 +9,7 @@ export default async function Page({
     threadId: string;
   };
 }) {
-  const page = await (new Api({ baseUrl: 'http://localhost:3001' })).page.getlistofPagethread();
+  const page = await new Api({ baseUrl: 'http://localhost:3001' }).page.getlistofPagethread();
 
-  return (
-    <LayoutRenderer layout={page.data} children={null} />
-  );
+  return <LayoutRenderer layout={page.data} children={null} />;
 }

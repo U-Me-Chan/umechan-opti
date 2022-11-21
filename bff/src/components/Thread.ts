@@ -10,7 +10,7 @@ class Thread implements T {
   state: T['state'] = { posts: [] };
   stateLoader: T['stateLoader'] = async (request) => {
     const { query } = request;
-    const { threadId = '0' } = query as { threadId: string };
+    const { threadId = '28768' } = query as { threadId: string };
     const { payload: { thread_data: { replies } } } = await getThread(threadId);
     this.state = {
       posts: replies,

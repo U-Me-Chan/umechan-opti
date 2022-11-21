@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import { Box } from 'src/ui/Box';
 
-export const Navbar = ({ items }: { items: { text: string; href: string }[] }) => {
+import { ApiComponentNavbarState } from '../../service/base.api';
+
+export const Navbar = ({ items }: { items: ApiComponentNavbarState }) => {
   return (
     <Box tag='ul' flexDirection='column' margin={0} padding={0}>
-      {items.map((item) => (
-        <Box tag='li' key={item.text} margin={0} padding={0}>
-          <Link href={item.href}>{item.text}</Link>
+      {items.links?.map((item) => (
+        <Box tag='li' key={item.title} margin={0} padding={0}>
+          <Link href={item.href || '/'}>{item.title}</Link>
         </Box>
       ))}
     </Box>

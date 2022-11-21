@@ -3,30 +3,40 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { getRadioStatus } from '../../service/api';
-import { RadioStatus } from '../../types/api';
-import { isServer } from '../../utils';
+import { ApiComponentRadioPlayerState } from '../../service/base.api';
+// import { getRadioStatus } from '../../service/api';
+// import { RadioStatus } from '../../types/api';
+import { isServer, UnwrapArray } from '../../utils';
 import { Box } from '../Box';
 import { Text, TextVariant } from '../Text';
 
-export const RadioPlayer = ({
-  mount,
+export const RadioAllPlayers = ({
   initialState,
 }: {
-  mount: { name: string; link: string; apiBasePath: string };
-  initialState: RadioStatus;
+  initialState: ApiComponentRadioPlayerState;
 }) => {
-  const { link, apiBasePath } = mount;
+  const content = initialState.status?.map((item) => (
+    <RadioPlayer key={item.mount?.name} initialState={item} />
+  ));
+
+  return <>{content}</>;
+};
+
+export const RadioPlayer = ({
+  initialState,
+}: {
+  initialState: UnwrapArray<ApiComponentRadioPlayerState['status']>;
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [updateIntervalMs, setUpdateIntervalMs] = useState(60000);
-  const [radioStatus, setRadioStatus] = useState<RadioStatus>(initialState);
+  // const [radioStatus, setRadioStatus] = useState<RadioStatus>(initialState);
 
   useEffect(() => {
     if (isServer()) {
       return;
     }
 
-    setUpdateIntervalMs(() => (isPlaying ? 10000 : 60000));
+    // setUpdateIntervalMs(() => (isPlaying ? 10000 : 60000));
   }, [isPlaying]);
 
   useEffect(() => {
@@ -34,20 +44,20 @@ export const RadioPlayer = ({
       return;
     }
 
-    getRadioStatus(apiBasePath)
-      .then((res) => setRadioStatus(res))
-      .catch(console.error);
+    // getRadioStatus(apiBasePath)
+    //   .then((res) => setRadioStatus(res))
+    //   .catch(console.error);
+    //
+    // const intervalPointer = setInterval(() => {
+    //   getRadioStatus(apiBasePath)
+    //     .then((res) => setRadioStatus(res))
+    //     .catch(console.error);
+    // }, updateIntervalMs);
 
-    const intervalPointer = setInterval(() => {
-      getRadioStatus(apiBasePath)
-        .then((res) => setRadioStatus(res))
-        .catch(console.error);
-    }, updateIntervalMs);
-
-    return () => clearInterval(intervalPointer);
+    // return () => clearInterval(intervalPointer);
   }, [updateIntervalMs]);
 
-  const content = radioStatus?.streaming ? (
+  const content = initialState?.status?.streaming ? (
     <>
       <Box flexDirection='column' alignItems='center' width='100%' gap='4px'>
         <Text
@@ -59,17 +69,17 @@ export const RadioPlayer = ({
             textOverflow: 'ellipsis',
           }}
         >
-          {radioStatus?.playlistData?.name}
+          {initialState?.status?.playlistData?.name}
         </Text>
       </Box>
 
       <Box gap='8px' width='100%' justifyContent='center'>
         <Box borderRadius='4px' overflow='hidden'>
           <Image
-            src={`${apiBasePath}api/scanner/image/${radioStatus.currentFile}`}
+            src={`${initialState?.mount?.apiBasePath}api/scanner/image/${initialState?.status.currentFile}`}
             width={128}
             height={128}
-            alt={radioStatus?.fileData?.id3Artist || ''}
+            alt={initialState?.status?.fileData?.id3Artist || ''}
             style={{ objectFit: 'cover' }}
           />
         </Box>
@@ -79,10 +89,16 @@ export const RadioPlayer = ({
         <Text
           variant={TextVariant.textBodyBold1}
           style={{ textAlign: 'center' }}
-        >{`${radioStatus?.fileData?.id3Artist} - ${radioStatus?.fileData?.id3Title}`}</Text>
+        >{`${initialState?.status?.fileData?.id3Artist} - ${initialState?.status?.fileData?.id3Title}`}</Text>
       </Box>
 
-      {isPlaying && <audio src={link} id={`radio_${mount}`} autoPlay={false} />}
+      {isPlaying && (
+        <audio
+          src={initialState?.mount?.link}
+          id={`radio_${initialState?.mount?.name}`}
+          autoPlay={false}
+        />
+      )}
 
       <Box gap='8px'>
         <button
@@ -93,11 +109,19 @@ export const RadioPlayer = ({
 
               setTimeout(() => {
                 if (next) {
-                  (document.getElementById(`radio_${mount}`) as HTMLAudioElement)
+                  (
+                    document.getElementById(
+                      `radio_${initialState?.mount?.name}`,
+                    ) as HTMLAudioElement
+                  )
                     ?.play()
                     ?.catch(console.error);
                 } else {
-                  (document.getElementById(`radio_${mount}`) as HTMLAudioElement)?.pause();
+                  (
+                    document.getElementById(
+                      `radio_${initialState?.mount?.name}`,
+                    ) as HTMLAudioElement
+                  )?.pause();
                 }
               }, 250);
 
@@ -117,7 +141,9 @@ export const RadioPlayer = ({
           onChange={(ev) => {
             try {
               const value = ev.target.valueAsNumber;
-              const tag = document.getElementById(`radio_${mount}`) as HTMLAudioElement;
+              const tag = document.getElementById(
+                `radio_${initialState?.mount?.name}`,
+              ) as HTMLAudioElement;
               tag.volume = value / 100;
             } catch {}
           }}

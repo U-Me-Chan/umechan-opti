@@ -6,7 +6,7 @@ import { LayoutRenderer } from 'src/ui/LayoutRenderer';
 const font = Inter({ subsets: ['cyrillic'], weight: ['400', '700'] });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const page = await (new Api({ baseUrl: 'http://localhost:3001' })).page.getlistofPagemainlayout();
+  const page = await new Api({ baseUrl: 'http://localhost:3001' }).page.getlistofPagemainlayout();
 
   return (
     <html lang='ru' className={font.className}>

@@ -8,9 +8,7 @@ export default async function Page({
     boardTag: string;
   };
 }) {
-  const page = await (new Api({ baseUrl: 'http://localhost:3001' })).page.getlistofPageboard();
+  const page = await new Api({ baseUrl: 'http://localhost:3001' }).page.getlistofPageboard();
 
-  return (
-    <LayoutRenderer layout={page.data} children={null} />
-  );
+  return <LayoutRenderer layout={page.data} children={null} />;
 }
