@@ -21,13 +21,15 @@ export type ApiLayoutRef = {
     | ApiComponentFeedState
     | ApiComponentBoardState
     | ApiComponentThreadState
+    | ApiComponentChildrenState
     | (ApiLayoutRef[] &
         ApiComponentBannerState &
         ApiComponentNavbarState &
         ApiComponentRadioPlayerState &
         ApiComponentFeedState &
         ApiComponentBoardState &
-        ApiComponentThreadState);
+        ApiComponentThreadState &
+        ApiComponentChildrenState);
 }[];
 
 export interface ApiComponentBannerState {
@@ -198,6 +200,8 @@ export interface ApiComponentThreadState {
     };
   }[];
 }
+
+export type ApiComponentChildrenState = string;
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
@@ -431,48 +435,64 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   page = {
     /**
-     * @description Returns layout and components for page pageMain
+     * @description Returns layout and components for page PageMain
      *
      * @tags common
      * @name GetlistofPagemain
-     * @summary Returns layout and components for page pageMain
-     * @request GET:/page/pageMain
+     * @summary Returns layout and components for page PageMain
+     * @request GET:/page/PageMain
      */
     getlistofPagemain: (params: RequestParams = {}) =>
       this.request<ApiLayoutRef, any>({
-        path: `/page/pageMain`,
+        path: `/page/PageMain`,
         method: 'GET',
         format: 'json',
         ...params,
       }),
 
     /**
-     * @description Returns layout and components for page pageBoard
+     * @description Returns layout and components for page PageBoard
      *
      * @tags common
      * @name GetlistofPageboard
-     * @summary Returns layout and components for page pageBoard
-     * @request GET:/page/pageBoard
+     * @summary Returns layout and components for page PageBoard
+     * @request GET:/page/PageBoard
      */
     getlistofPageboard: (params: RequestParams = {}) =>
       this.request<ApiLayoutRef, any>({
-        path: `/page/pageBoard`,
+        path: `/page/PageBoard`,
         method: 'GET',
         format: 'json',
         ...params,
       }),
 
     /**
-     * @description Returns layout and components for page pageThread
+     * @description Returns layout and components for page PageThread
      *
      * @tags common
      * @name GetlistofPagethread
-     * @summary Returns layout and components for page pageThread
-     * @request GET:/page/pageThread
+     * @summary Returns layout and components for page PageThread
+     * @request GET:/page/PageThread
      */
     getlistofPagethread: (params: RequestParams = {}) =>
       this.request<ApiLayoutRef, any>({
-        path: `/page/pageThread`,
+        path: `/page/PageThread`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Returns layout and components for page PageMainLayout
+     *
+     * @tags common
+     * @name GetlistofPagemainlayout
+     * @summary Returns layout and components for page PageMainLayout
+     * @request GET:/page/PageMainLayout
+     */
+    getlistofPagemainlayout: (params: RequestParams = {}) =>
+      this.request<ApiLayoutRef, any>({
+        path: `/page/PageMainLayout`,
         method: 'GET',
         format: 'json',
         ...params,

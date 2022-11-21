@@ -3,7 +3,7 @@ import { Page } from 'core';
 
 class PageBoard extends Page {
   constructor() {
-    super('pageBoard', PageBoardLayout);
+    super('PageBoard', PageBoardLayout);
   }
 }
 

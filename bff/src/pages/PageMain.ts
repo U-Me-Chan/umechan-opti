@@ -3,7 +3,7 @@ import { Page } from 'core';
 
 class PageMain extends Page {
   constructor() {
-    super('pageMain', PageMainLayout);
+    super('PageMain', PageMainLayout);
   }
 }
 

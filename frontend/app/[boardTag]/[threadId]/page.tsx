@@ -1,8 +1,5 @@
-import { getThread } from 'src/service/api';
-
-import { Bound } from '../../../src/ui/Bound';
-import { Box } from '../../../src/ui/Box';
-import { PostContainer } from '../../../src/ui/PostContainer';
+import { Api } from 'src/service/base.api';
+import { LayoutRenderer } from 'src/ui/LayoutRenderer';
 
 export default async function Page({
   params: { boardTag, threadId },
@@ -12,31 +9,9 @@ export default async function Page({
     threadId: string;
   };
 }) {
-  const data = await getThread(threadId);
+  const page = await (new Api({ baseUrl: 'http://localhost:3001' })).page.getlistofPagethread();
 
   return (
-    <Bound
-      title={
-        data.payload.thread_data.subject ||
-        data.payload.thread_data.truncated_message?.slice(0, 20) ||
-        threadId
-      }
-    >
-      <Box
-        flexDirection='column'
-        gap={8}
-        justifyContent='flex-start'
-        alignItems='flex-start'
-        maxWidth='100%'
-      >
-        <PostContainer post={data.payload.thread_data} />
-
-        <hr style={{ width: '100%', border: '1px solid white' }} />
-
-        {data.payload.thread_data.replies.map((post) => (
-          <PostContainer key={post.id} post={post} />
-        ))}
-      </Box>
-    </Bound>
+    <LayoutRenderer layout={page.data} children={null} />
   );
 }
