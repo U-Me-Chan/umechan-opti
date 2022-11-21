@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "codegen:api": "npx swagger-typescript-api@latest --path http://localhost:3001/docs/swagger.json --output ./src/service --type-prefix Api --name base.api.ts"
   },
   "dependencies": {
     "@next/font": "^13.0.3",

@@ -20,4 +20,4 @@ server
   .addComponent(Feed)
   .addComponent(Board)
   .addComponent(Thread)
-  .listen(3000);
+  .listen(3001);
