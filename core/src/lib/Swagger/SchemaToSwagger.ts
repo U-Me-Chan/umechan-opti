@@ -72,7 +72,13 @@ export class SchemaToSwagger {
       summary: `Returns layout and components for page ${page.name}`,
       description: `Returns layout and components for page ${page.name}`,
       operationId: `getlistof_${page.name.toLowerCase()}`,
-      parameters: [],
+      parameters: (page.queryParams || []).map(qp => ({
+        in: 'query',
+        required: true,
+        name: qp[0],
+        description: qp[0],
+        schema: convertTypeSchemaToSwaggerDefinition(qp[1]),
+      })),
       responses: {
         200: {
           description: `List of ${page.name}Entity`,

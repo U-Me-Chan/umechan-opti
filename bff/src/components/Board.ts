@@ -10,8 +10,8 @@ class Board implements T {
   state: T['state'] = { posts: [] };
   stateLoader: T['stateLoader'] = async (request) => {
     const { query } = request;
-    const { board = 'b', page = '0' } = query as { board: string, page: string };
-    const { payload: { posts } } = await getBoardData(board, Number(page));
+    const { boardId = 'b', page = '0' } = query as { boardId: string, page: string };
+    const { payload: { posts } } = await getBoardData(boardId, Number(page));
     this.state = {
       posts: posts || [],
     };

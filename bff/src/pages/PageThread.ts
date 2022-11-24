@@ -3,7 +3,13 @@ import { Page } from 'core';
 
 class PageThread extends Page {
   constructor() {
-    super('PageThread', PageThreadLayout);
+    super(
+      'PageThread',
+      PageThreadLayout,
+      [
+        ['threadId', { type: 'string' }],
+      ],
+    );
   }
 }
 

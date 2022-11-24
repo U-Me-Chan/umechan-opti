@@ -458,10 +458,19 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Returns layout and components for page PageBoard
      * @request GET:/page/PageBoard
      */
-    getlistofPageboard: (params: RequestParams = {}) =>
+    getlistofPageboard: (
+      query: {
+        /** boardId */
+        boardId: string;
+        /** page */
+        page: string;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<ApiLayoutRef, any>({
         path: `/page/PageBoard`,
         method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),
@@ -474,10 +483,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Returns layout and components for page PageThread
      * @request GET:/page/PageThread
      */
-    getlistofPagethread: (params: RequestParams = {}) =>
+    getlistofPagethread: (
+      query: {
+        /** threadId */
+        threadId: string;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<ApiLayoutRef, any>({
         path: `/page/PageThread`,
         method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),

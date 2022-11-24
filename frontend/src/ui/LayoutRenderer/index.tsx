@@ -77,5 +77,5 @@ export const LayoutRenderer = ({
     );
   });
 
-  return <>{content}</>;
+  return <React.Fragment>{content}</React.Fragment>;
 };
