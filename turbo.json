@@ -1,16 +1,23 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+    "core#build": {
+      "outputs": ["dist/**"]
+    },
+    "bff#build": {
+      "dependsOn": ["core#build"],
+      "outputs": ["dist/**"]
+    },
+    "bff#dev": {
+      "dependsOn": ["bff#build"],
+      "outputs": ["dist/**"]
+    },
+    "frontend#build": {
+      "dependsOn": ["bff#build", "bff#dev"],
+      "outputs": [".next/**"]
     },
     "lint": {
-      "dependsOn": [],
-      "outputs": []
-    },
-    "dev": {
-      "dependsOn": ["build", "lint"],
+      "dependsOn": ["bff#build"],
       "outputs": []
     }
   }
