@@ -29,7 +29,11 @@ export const LayoutRenderer = ({
 
     if (item.type === 'layout') {
       return (
-        <Box key={key} flexDirection={item.direction as CSSProperties['flexDirection']}>
+        <Box
+          key={key}
+          flexDirection={item.direction as CSSProperties['flexDirection']}
+          className={`layout__${item.name}`}
+        >
           {(item.item as ApiLayoutRef).map((subItem) => (
             <LayoutRenderer
               key={`subitem_${key}_${subItem.type}_${subItem.name}`}
@@ -43,7 +47,11 @@ export const LayoutRenderer = ({
     }
 
     if (item.name === 'Children') {
-      return <React.Fragment key={key}>{children}</React.Fragment>;
+      return (
+        <Box key={key} className={`layout__${item.name}`}>
+          {children}
+        </Box>
+      );
     }
 
     if (item.name === 'Banner') {

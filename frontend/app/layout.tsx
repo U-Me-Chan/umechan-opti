@@ -15,7 +15,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <style
           dangerouslySetInnerHTML={{
-            __html: '* { box-sizing: border-box; } main > div { width: 100%; }',
+            __html: `
+              * { box-sizing: border-box; }
+              div[data-nextjs-scroll-focus-boundary] { width: 100%; }
+              .layout__LeftSidebar, .layout__RightSidebar {
+                width: 100%;
+                max-width: 256px;
+                gap: 8px;
+              }
+              .layout__Children {
+                width: 100%;
+                max-width: 1024px;
+              }
+            `,
           }}
         />
       </head>

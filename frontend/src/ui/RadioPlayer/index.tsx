@@ -7,6 +7,7 @@ import { ApiComponentRadioPlayerState } from '../../service/base.api';
 // import { getRadioStatus } from '../../service/api';
 // import { RadioStatus } from '../../types/api';
 import { isServer, UnwrapArray } from '../../utils';
+import { Bound } from '../Bound';
 import { Box } from '../Box';
 import { Text, TextVariant } from '../Text';
 
@@ -59,20 +60,6 @@ export const RadioPlayer = ({
 
   const content = initialState?.status?.streaming ? (
     <>
-      <Box flexDirection='column' alignItems='center' width='100%' gap='4px'>
-        <Text
-          variant={TextVariant.textBody1}
-          style={{
-            whiteSpace: 'pre',
-            maxWidth: '100%',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {initialState?.status?.playlistData?.name}
-        </Text>
-      </Box>
-
       <Box gap='8px' width='100%' justifyContent='center'>
         <Box borderRadius='4px' overflow='hidden'>
           <Image
@@ -156,15 +143,21 @@ export const RadioPlayer = ({
     </>
   );
 
+  const title = initialState?.status?.playlistData?.name
+    ? `${initialState?.mount?.name}: ${initialState?.status?.playlistData?.name}`
+    : initialState?.mount?.name || '';
+
   return (
-    <Box
-      flexDirection='column'
-      alignItems='center'
-      justifyContent='flex-start'
-      gap='8px'
-      width='100%'
-    >
-      {content}
-    </Box>
+    <Bound title={title}>
+      <Box
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='flex-start'
+        gap='8px'
+        width='100%'
+      >
+        {content}
+      </Box>
+    </Bound>
   );
 };

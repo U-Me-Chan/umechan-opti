@@ -10,21 +10,17 @@ interface FeedProps {
 
 const Feed: FC<FeedProps> = ({ data }) => {
   return (
-    <>
+    <Box
+      flexDirection='column'
+      gap={8}
+      justifyContent='flex-start'
+      alignItems='flex-start'
+      maxWidth='100%'
+    >
       {data.posts?.map((post) => (
-        <Box
-          key={post.id}
-          flexDirection='column'
-          gap={8}
-          justifyContent='flex-start'
-          alignItems='flex-start'
-          maxWidth='100%'
-          style={{ marginBottom: '20px' }}
-        >
-          <PostContainer post={post} opPost />
-        </Box>
+        <PostContainer key={post.id} post={post} />
       ))}
-    </>
+    </Box>
   );
 };
 

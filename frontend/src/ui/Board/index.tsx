@@ -11,7 +11,7 @@ interface BoardProps {
 
 const Board: FC<BoardProps> = ({ data }) => {
   return (
-    <Bound title={'board'}>
+    <Bound title='Доска'>
       <Box
         flexDirection='column'
         gap={8}
@@ -37,7 +37,7 @@ const Board: FC<BoardProps> = ({ data }) => {
               justifyContent='flex-start'
               alignItems='flex-start'
               maxWidth='100%'
-              style={{ paddingLeft: '20px' }}
+              style={{ paddingLeft: '8px' }}
             >
               {post.replies?.map((reply) => (
                 <PostContainer key={reply.id} post={reply} />
